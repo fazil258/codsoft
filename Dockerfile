@@ -2,7 +2,17 @@ FROM jenkins/jenkins:lts
  
 USER root
  
+# Install Docker CLI properly
+
 RUN apt-get update && \
-    apt-get install -y docker.io
+
+    apt-get install -y docker.io && \
+
+    apt-get clean
+ 
+# Add jenkins user to docker group
+
+RUN usermod -aG docker Jenkins
  
 USER jenkins
+ 

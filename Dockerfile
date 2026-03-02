@@ -16,6 +16,12 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
     apt-get clean
+    
+# Copy requirements.txt into the image
+COPY requirements.txt /opt/requirements.txt
+
+# Install Python dependencies
+RUN pip3 install --no-cache-dir -r /opt/requirements.txt
 
 # Add jenkins user to docker group
 RUN usermod -aG docker jenkins
@@ -34,3 +40,4 @@ RUN javac /home/jenkins/tasks/Task1.java
 # RUN python3 /home/jenkins/tasks/Task4.py
 
 USER jenkins
+

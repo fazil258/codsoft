@@ -12,7 +12,8 @@ RUN apt-get update && \
  
 # Add jenkins user to docker group
 
-RUN usermod -aG docker Jenkins
+RUN usermod -aG docker jenkins
  
 USER jenkins
  
+

@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 # Install Java (for Task1.java)
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk && \
+    apt-get install -y default-jdk && \
     apt-get clean
 
 # Install Python3 (for Task2.py, Task4.py)
@@ -40,4 +40,5 @@ RUN javac /home/jenkins/tasks/Task1.java
 # RUN python3 /home/jenkins/tasks/Task4.py
 
 USER jenkins
+
 

@@ -2,33 +2,33 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Install Docker, Java, Python + venv
+# Install required tools only
 RUN apt-get update && \
     apt-get install -y \
-        docker.io \
         default-jdk \
         python3 \
         python3-pip \
-        python3-venv && \
+        python3-venv \
+        curl \
+        ca-certificates && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Docker CLI manually (lighter & safer)
+RUN curl -fsSL https://get.docker.com | sh
+
 # Create virtual environment
 RUN python3 -m venv /opt/venv
-
-# Set virtual environment path
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy requirements.txt
+# Copy requirements
 COPY requirements.txt /opt/requirements.txt
-
-# Install Python dependencies inside venv
 RUN pip install --no-cache-dir -r /opt/requirements.txt
 
 # Add jenkins user to docker group
 RUN usermod -aG docker jenkins
 
-# Create tasks directory
+# Create tasks folder
 RUN mkdir -p /home/jenkins/tasks
 
 # Copy task files
